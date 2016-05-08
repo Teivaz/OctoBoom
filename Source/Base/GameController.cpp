@@ -21,10 +21,12 @@ GameController::GameController()
 , m_rootNode(nullptr)
 , m_renderer(nullptr)
 , m_isRunning(true)
-{}
+{
+}
 
 GameController::~GameController()
 {
+    SDL_SetEventFilter(nullptr, nullptr);
     delete m_renderer;
     delete m_rootNode;
 }
@@ -44,6 +46,12 @@ void GameController::DestroyInstance()
     s_instance = nullptr;
 }
 
+int GameController::EventFilter(void* instance, SDL_Event* event)
+{
+    GameController* self = (GameController*)instance;
+    return (int)(self->m_eventFilter.find(event->type) != self->m_eventFilter.end());
+}
+
 void GameController::Init(
           int width, int height,
           SDL_Window* window
@@ -51,6 +59,22 @@ void GameController::Init(
 {
     delete m_renderer;
     m_renderer = new Renderer(window);
+    
+    SetEventHandler(SDL_QUIT, [this](const SDL_Event& event){
+        // TODO: notify exit
+        m_isRunning = false;
+    });
+    SetEventHandler(SDL_MOUSEBUTTONDOWN, [this](const SDL_Event& event){
+        m_inputController.OnMouseButtonDown(&event.button);
+    });
+    SetEventHandler(SDL_MOUSEMOTION, [this](const SDL_Event& event){
+        m_inputController.OnMouseMove(&event.motion);
+    });
+    SetEventHandler(SDL_MOUSEBUTTONUP, [this](const SDL_Event& event){
+        m_inputController.OnMouseButtonUp(&event.button);
+    });
+    
+    SDL_SetEventFilter(&GameController::EventFilter, this);
 }
 
 void GameController::SetFPS(float fps)
@@ -60,24 +84,18 @@ void GameController::SetFPS(float fps)
     m_tickInterval = 1000/fps;
 }
 
+void GameController::SetEventHandler(Uint32 type, const std::function<void(const SDL_Event&)>& handler)
+{
+    m_eventFilter.insert(type);
+    m_eventHandlers[type] = handler;
+}
+
 void GameController::HandleEvent(const SDL_Event& event)
 {
-    if(event.type == SDL_QUIT)
+    auto iterator = m_eventHandlers.find(event.type);
+    if(iterator != m_eventHandlers.end() && iterator->second)
     {
-        // TODO: notify exit
-        m_isRunning = false;
-    }
-    else if (event.type == SDL_MOUSEBUTTONDOWN)
-    {
-        m_inputController.OnMouseButtonDown(&event.button);
-    }
-    else if(event.type == SDL_MOUSEMOTION)
-    {
-        m_inputController.OnMouseMove(&event.motion);
-    }
-    else if(event.type == SDL_MOUSEBUTTONUP)
-    {
-        m_inputController.OnMouseButtonUp(&event.button);
+        iterator->second(event);
     }
 }
 

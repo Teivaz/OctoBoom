@@ -32,7 +32,7 @@ MainScene::MainScene()
     GameController::GetInstance().GetImageCache().LoadAtlas("config.json");
     
     Sprite* background = new Sprite();
-    background->LoadImage("BackGround.jpg");
+    background->LoadImage("BackGround.png");
     AddChild(background);
     
     GameController::GetInstance().SubscribeInput(this);

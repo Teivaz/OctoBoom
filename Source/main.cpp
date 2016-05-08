@@ -13,7 +13,7 @@
 
 const int SCREEN_WIDTH = 755;
 const int SCREEN_HEIGHT = 600;
-const int FPS = 60;
+const int FPS = 30;
 
 int main(int argc, const char * argv[])
 {
@@ -45,18 +45,23 @@ int main(int argc, const char * argv[])
         uint32_t currentTime = SDL_GetTicks();
         deltaTime = currentTime - lastUpdateTime;
         
+        int32_t timeToSleep = controller.GetTickInterval() - deltaTime;
+        if(timeToSleep > 0)
+        {
+            SDL_Delay(timeToSleep);
+        }
+        
+        currentTime = SDL_GetTicks();
+        deltaTime = currentTime - lastUpdateTime;
+        
         while(SDL_PollEvent(&event))
         {
             controller.HandleEvent(event);
         }
         
-        if(controller.ShouldTick(deltaTime))
-        {
-            controller.Tick(deltaTime);
-            lastUpdateTime = currentTime;
-            controller.Draw();
-        }
-        SDL_Delay(1);
+        controller.Tick(deltaTime);
+        lastUpdateTime = currentTime;
+        controller.Draw();
     }
     GameController::DestroyInstance();
     SDL_Quit();

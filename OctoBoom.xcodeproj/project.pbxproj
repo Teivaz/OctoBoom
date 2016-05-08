@@ -11,6 +11,7 @@
 		0B1D0B291C6A8EC4008DE537 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B1D0B281C6A8EC4008DE537 /* SDL2.framework */; };
 		0B1D0B2C1C6A8F89008DE537 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B1D0B2B1C6A8F89008DE537 /* Cocoa.framework */; };
 		0B1D0B331C6A9882008DE537 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B1D0B311C6A9882008DE537 /* Node.cpp */; };
+		0B2609BA1CDF82F000B78B62 /* TextNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BE140EF1C738A7B0005D376 /* TextNode.cpp */; };
 		0B3F14401C6B358D00E90707 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B3F143E1C6B358D00E90707 /* Renderer.cpp */; };
 		0B3F14461C6B58C700E90707 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B3F14441C6B58C700E90707 /* GameController.cpp */; };
 		0B3F14521C6B975400E90707 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B3F14501C6B975400E90707 /* Sprite.cpp */; };
@@ -488,6 +489,7 @@
 				0B3F14611C6B9C1B00E90707 /* GameController.cpp in Sources */,
 				0B3F146A1C6B9D5B00E90707 /* TestManager.cpp in Sources */,
 				0BE140D91C70A79E0005D376 /* Cell.cpp in Sources */,
+				0B2609BA1CDF82F000B78B62 /* TextNode.cpp in Sources */,
 				0B3F14621C6B9C1B00E90707 /* Sprite.cpp in Sources */,
 				0B3F14641C6B9C6700E90707 /* Tests.cpp in Sources */,
 				0BE140D71C70A7870005D376 /* ImageCache.cpp in Sources */,

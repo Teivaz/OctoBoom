@@ -14,13 +14,13 @@ BEGIN_TEST_CATEGORY("Node")
 
 ADD_TEST("children nested transform", {
     std::unique_ptr<Node> root(new Node);
-    std::unique_ptr<Node> c1(new Node);
-    std::unique_ptr<Node> c2(new Node);
-    std::unique_ptr<Node> c3(new Node);
+    Node* c1 = new Node;
+    Node* c2 = new Node;
+    Node* c3 = new Node;
     
-    root->AddChild(c1.get());
-    root->AddChild(c2.get());
-    c2->AddChild(c3.get());
+    root->AddChild(c1);
+    root->AddChild(c2);
+    c2->AddChild(c3);
     
     vec2f pos(10, 10);
     vec2f pos2(41, 66);
